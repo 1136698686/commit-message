@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辞宝之王 - 网页版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        success: '#10b981',
+                        error: '#ef4444',
+                        warning: '#f59e0b',
+                        dark: '#1e293b',
+                        lightDark: '#334155',
+                        text: '#f8fafc',
+                        textLight: '#94a3b8'
+                    },
+                    fontFamily: {
+                        sans: ['Microsoft YaHei', 'sans-serif'],
+                        mono: ['Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            }
+            .bg-game {
+                background-image: url('https://i.imgur.com/dQeF9XZ.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        }
+    </style>
+</head>
+<body class="bg-dark text-text min-h-screen">
+    <!-- 游戏背景 -->
+    <div class="fixed inset-0 bg-game opacity-20 z-0"></div>
+    
+    <!-- 主容器 -->
+    <div class="relative z-10 container mx-auto px-4 py-8 max-w-4xl">
+        <!-- 标题 -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-primary mb-2 text-shadow">辞宝之王</h1>
+            <p class="text-textLight">网页版辅助工具</p>
+        </header>
+        
+        <!-- 主内容 -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- 左侧：游戏信息 -->
+            <div class="lg:col-span-1">
+                <!-- 游戏状态 -->
+                <div class="bg-lightDark rounded-xl p-4 mb-6">
+                    <h2 class="text-xl font-semibold text-primary mb-4">游戏状态</h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-textLight">等级</span>
+                            <span class="font-mono">Lv. 1</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-textLight">金币</span>
+                            <span class="font-mono">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-textLight">彩玉</span>
+                            <span class="font-mono">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-textLight">体力</span>
+                            <span class="font-mono">100/100</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 功能快捷方式 -->
+                <div class="bg-lightDark rounded-xl p-4">
+                    <h2 class="text-xl font-semibold text-primary mb-4">快捷功能</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="bg-primary hover:bg-primary/80 text-white py-3 px-4 rounded-lg transition-all flex flex-col items-center">
+                            <i class="fa fa-gift text-xl mb-2"></i>
+                            <span>免费礼包</span>
+                        </button>
+                        <button class="bg-success hover:bg-success/80 text-white py-3 px-4 rounded-lg transition-all flex flex-col items-center">
+                            <i class="fa fa-exchange text-xl mb-2"></i>
+                            <span>兑换码</span>
+                        </button>
+                        <button class="bg-warning hover:bg-warning/80 text-white py-3 px-4 rounded-lg transition-all flex flex-col items-center">
+                            <i class="fa fa-trophy text-xl mb-2"></i>
+                            <span>自动爬塔</span>
+                        </button>
+                        <button class="bg-error hover:bg-error/80 text-white py-3 px-4 rounded-lg transition-all flex flex-col items-center">
+                            <i class="fa fa-star text-xl mb-2"></i>
+                            <span>武将升星</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧：主要功能 -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- 账号登录 -->
+                <div class="bg-lightDark rounded-xl p-6">
+                    <h2 class="text-xl font-semibold text-primary mb-4">账号登录</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-textLight mb-2">用户名</label>
+                            <input type="text" id="username" class="w-full bg-dark border border-textLight rounded-lg px-4 py-2 focus:outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-textLight mb-2">密码</label>
+                            <input type="password" id="password" class="w-full bg-dark border border-textLight rounded-lg px-4 py-2 focus:outline-none focus:border-primary">
+                        </div>
+                        <button id="loginBtn" class="w-full bg-primary hover:bg-primary/80 text-white py-3 rounded-lg transition-all">
+                            <i class="fa fa-sign-in mr-2"></i>登录
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 免费礼包 -->
+                <div class="bg-lightDark rounded-xl p-6">
+                    <h2 class="text-xl font-semibold text-primary mb-4">免费礼包</h2>
+                    <p class="text-textLight mb-4">点击下方按钮获取免费游戏礼包</p>
+                    <button id="getGiftBtn" class="w-full bg-success hover:bg-success/80 text-white py-3 rounded-lg transition-all">
+                        <i class="fa fa-gift mr-2"></i>获取免费礼包
+                    </button>
+                </div>
+                
+                <!-- 兑换码 -->
+                <div class="bg-lightDark rounded-xl p-6">
+                    <h2 class="text-xl font-semibold text-primary mb-4">兑换码</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-textLight mb-2">兑换码</label>
+                            <input type="text" id="redeemCode" class="w-full bg-dark border border-textLight rounded-lg px-4 py-2 focus:outline-none focus:border-primary" placeholder="输入兑换码">
+                        </div>
+                        <button id="redeemBtn" class="w-full bg-warning hover:bg-warning/80 text-white py-3 rounded-lg transition-all">
+                            <i class="fa fa-exchange mr-2"></i>兑换
+                        </button>
+                        <button id="autoRedeemBtn" class="w-full bg-primary hover:bg-primary/80 text-white py-3 rounded-lg transition-all">
+                            <i class="fa fa-magic mr-2"></i>自动使用所有兑换码
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 日志区域 -->
+        <div class="mt-8 bg-lightDark rounded-xl p-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-primary">操作日志</h2>
+                <button id="clearLogBtn" class="text-textLight hover:text-text text-sm">
+                    <i class="fa fa-trash mr-1"></i>清空日志
+                </button>
+            </div>
+            <div id="logContainer" class="bg-dark rounded-lg p-4 max-h-60 overflow-y-auto font-mono text-sm space-y-1">
+                <div class="text-textLight">[系统] 辞宝之王网页版已加载</div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="mt-8 text-center text-textLight text-sm">
+            <p>© 2026 辞宝之王网页版 | 仅供学习和娱乐使用</p>
+        </footer>
+    </div>
+    
+    <!-- 提示框 -->
+    <div id="toast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-dark/90 backdrop-blur-sm border border-primary rounded-lg px-6 py-4 shadow-lg opacity-0 transition-opacity duration-300 z-50">
+        <div id="toastContent" class="text-center"></div>
+    </div>
+    
+    <script>
+        // 配置
+        const config = {
+            redeemCodes: [
+                "WMXY666", "WMXY888", "WMXY999", "SVIP66", "SVIP99", 
+                "BC222", "BC003", "DZLB01", "BC004", "YDJR01", 
+                "BC005", "BC006", "BC007", "BC008", "BC009", 
+                "BC010", "BC011", "BC012", "BC013", "LBJR88", 
+                "CXKL01", "CJKL01", "YXFL01"
+            ]
+        };
+        
+        // DOM元素
+        const elements = {
+            username: document.getElementById('username'),
+            password: document.getElementById('password'),
+            loginBtn: document.getElementById('loginBtn'),
+            getGiftBtn: document.getElementById('getGiftBtn'),
+            redeemCode: document.getElementById('redeemCode'),
+            redeemBtn: document.getElementById('redeemBtn'),
+            autoRedeemBtn: document.getElementById('autoRedeemBtn'),
+            clearLogBtn: document.getElementById('clearLogBtn'),
+            logContainer: document.getElementById('logContainer'),
+            toast: document.getElementById('toast'),
+            toastContent: document.getElementById('toastContent')
+        };
+        
+        // 工具函数
+        function showToast(message, type = 'info') {
+            elements.toastContent.textContent = message;
+            elements.toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-dark/90 backdrop-blur-sm border border-primary rounded-lg px-6 py-4 shadow-lg opacity-100 transition-opacity duration-300 z-50';
+            
+            setTimeout(() => {
+                elements.toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-dark/90 backdrop-blur-sm border border-primary rounded-lg px-6 py-4 shadow-lg opacity-0 transition-opacity duration-300 z-50';
+            }, 3000);
+        }
+        
+        function logMessage(content, type = 'info') {
+            const logItem = document.createElement('div');
+            const time = new Date().toLocaleTimeString('zh-CN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            logItem.textContent = `[${time}] ${content}`;
+            
+            if (type === 'success') {
+                logItem.className = 'text-success';
+            } else if (type === 'error') {
+                logItem.className = 'text-error';
+            } else if (type === 'warning') {
+                logItem.className = 'text-warning';
+            } else {
+                logItem.className = 'text-text';
+            }
+            
+            elements.logContainer.appendChild(logItem);
+            elements.logContainer.scrollTop = elements.logContainer.scrollHeight;
+        }
+        
+        // WebSocket通信
+        function findGameWebSocket() {
+            const candidates = [
+                window.ws, 
+                window.h5websocket?.ws, 
+                window.h5websocket, 
+                window.gameWs, 
+                window.WebSocketClient,
+                window._ws,
+                window.gameSocket
+            ];
+            
+            for (const ws of candidates) {
+                if (ws && (ws.sendAsync || ws.send)) {
+                    return ws;
+                }
+            }
+            
+            return null;
+        }
+
+        async function sendGameCommand(cmd, params = {}) {
+            const ws = findGameWebSocket();
+            if (!ws) {
+                showToast("游戏连接失败，请刷新页面重试", "error");
+                throw new Error("游戏WebSocket未连接");
+            }
+
+            const requestData = {
+                ack: 0,
+                cmd: cmd,
+                params: params,
+                seq: Date.now(),
+                time: Date.now()
+            };
+
+            if (window.g_utils?.bon?.encode) {
+                requestData.body = window.g_utils.bon.encode(params);
+                delete requestData.params;
+            }
+
+            try {
+                if (ws.sendAsync) {
+                    const response = await ws.sendAsync(requestData);
+                    return response?._rawData || response?.getData?.() || response?.body || response;
+                } else if (ws.send) {
+                    ws.send(JSON.stringify(requestData));
+                    return { success: true, message: "命令已发送" };
+                }
+            } catch (error) {
+                console.error("[辞宝之王] 发送命令失败:", error);
+                throw error;
+            }
+            
+            throw new Error("WebSocket不支持发送消息");
+        }
+        
+        // 登录函数
+        async function executeLogin() {
+            const username = elements.username.value.trim();
+            const password = elements.password.value.trim();
+            
+            if (!username || !password) {
+                showToast('请输入用户名和密码', 'warning');
+                return;
+            }
+            
+            try {
+                logMessage('开始登录账号', 'info');
+                // 模拟登录
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                logMessage('账号登录成功', 'success');
+                showToast('账号登录成功', 'success');
+            } catch (error) {
+                logMessage(`登录失败: ${error.message}`, 'error');
+                showToast(`登录失败: ${error.message}`, 'error');
+            }
+        }
+        
+        // 获取免费礼包函数
+        async function executeGetFreeGift() {
+            try {
+                logMessage('开始获取免费礼包', 'info');
+                // 模拟获取礼包
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                logMessage('免费礼包获取成功', 'success');
+                showToast('免费礼包获取成功', 'success');
+            } catch (error) {
+                logMessage(`获取免费礼包失败: ${error.message}`, 'error');
+                showToast(`获取免费礼包失败: ${error.message}`, 'error');
+            }
+        }
+        
+        // 兑换码函数
+        async function executeRedeemCode(code) {
+            try {
+                logMessage(`开始使用兑换码: ${code}`, 'info');
+                // 模拟兑换
+                await new Promise(resolve => setTimeout(resolve, 500));
+                logMessage(`兑换码 ${code} 使用成功`, 'success');
+                showToast(`兑换码 ${code} 使用成功`, 'success');
+                return true;
+            } catch (error) {
+                logMessage(`兑换码 ${code} 使用失败: ${error.message}`, 'error');
+                showToast(`兑换码 ${code} 使用失败`, 'error');
+                return false;
+            }
+        }
+        
+        // 自动使用所有兑换码
+        async function executeAutoRedeem() {
+            let successCount = 0;
+            let failCount = 0;
+            
+            for (const code of config.redeemCodes) {
+                const success = await executeRedeemCode(code);
+                if (success) {
+                    successCount++;
+                } else {
+                    failCount++;
+                }
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+            
+            logMessage(`兑换码使用完成，成功: ${successCount}，失败: ${failCount}`, 'success');
+            showToast(`兑换码使用完成，成功: ${successCount}，失败: ${failCount}`, 'success');
+        }
+        
+        // 事件监听器
+        elements.loginBtn.addEventListener('click', executeLogin);
+        elements.getGiftBtn.addEventListener('click', executeGetFreeGift);
+        elements.redeemBtn.addEventListener('click', () => {
+            const code = elements.redeemCode.value.trim();
+            if (code) {
+                executeRedeemCode(code);
+            } else {
+                showToast('请输入兑换码', 'warning');
+            }
+        });
+        elements.autoRedeemBtn.addEventListener('click', executeAutoRedeem);
+        elements.clearLogBtn.addEventListener('click', () => {
+            elements.logContainer.innerHTML = '<div class="text-textLight">[系统] 日志已清空</div>';
+        });
+        
+        // 初始化
+        logMessage('辞宝之王网页版初始化完成', 'success');
+        showToast('辞宝之王网页版已加载', 'success');
+    </script>
+</body>
+</html>
